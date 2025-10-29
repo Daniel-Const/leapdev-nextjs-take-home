@@ -1,16 +1,19 @@
 "use client";
 
+import BookCard from "@/components/BookCard";
+import BookForm from "@/components/BookForm";
+import Modal from "@/components/Modal";
+import { Book } from "@/types/book";
+import { Button } from "@material-tailwind/react";
 import { useState } from "react";
 import data from "../../public/data.json";
-import BookCard from "@/components/BookCard";
-import Modal from "@/components/Modal";
-import BookForm from "@/components/BookForm";
-import { Book } from "@/types/book";
+import { ThemeProvider, useDarkModeSwitch } from "./Theme";
 
 export default function Page() {
   const [books, setBooks] = useState<Book[]>(data as Book[]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(undefined);
+  const { isDarkMode, toggleDarkMode } = useDarkModeSwitch();
 
   const handleAddBook = (newBook: Partial<Book>) => {
     const book: Book = {
@@ -43,48 +46,58 @@ export default function Page() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Book Gallery</h1>
-        <button
-          onClick={() => {
-            setSelectedBook(undefined);
-            setIsModalOpen(true);
-          }}
-          className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-        >
-          Add New Book
-        </button>
-      </div>
+    <ThemeProvider darkMode={isDarkMode}>
+      <main className="bg-red-100 dark:bg-blue-500">
+        <div className="container mx-auto px-4 py-8">
+          <Button
+            className="bg-blue-500 dark:bg-red-500"
+            onClick={() => toggleDarkMode()}
+          >
+            Test toggle
+          </Button>
+          <div className="flex justify-between items-center mb-8">
+            <h1 className="text-3xl font-bold">Book Gallery</h1>
+            <button
+              onClick={() => {
+                setSelectedBook(undefined);
+                setIsModalOpen(true);
+              }}
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+            >
+              Add New Book
+            </button>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {books.map((book) => (
-          <BookCard
-            key={book.id}
-            book={book}
-            onEdit={handleEdit}
-            onDelete={handleDeleteBook}
-          />
-        ))}
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {books.map((book) => (
+              <BookCard
+                key={book.id}
+                book={book}
+                onEdit={handleEdit}
+                onDelete={handleDeleteBook}
+              />
+            ))}
+          </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedBook(undefined);
-        }}
-        title={selectedBook ? "Edit Book" : "Add New Book"}
-      >
-        <BookForm
-          book={selectedBook}
-          onSubmit={selectedBook ? handleUpdateBook : handleAddBook}
-          onCancel={() => {
-            setIsModalOpen(false);
-            setSelectedBook(undefined);
-          }}
-        />
-      </Modal>
-    </main>
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              setSelectedBook(undefined);
+            }}
+            title={selectedBook ? "Edit Book" : "Add New Book"}
+          >
+            <BookForm
+              book={selectedBook}
+              onSubmit={selectedBook ? handleUpdateBook : handleAddBook}
+              onCancel={() => {
+                setIsModalOpen(false);
+                setSelectedBook(undefined);
+              }}
+            />
+          </Modal>
+        </div>
+      </main>
+    </ThemeProvider>
   );
 }
