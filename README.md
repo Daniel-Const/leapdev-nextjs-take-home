@@ -10,7 +10,9 @@ Please do not use AI in any way, shape, or form.
 
 Please implement the following:
 
-1. Use a component library to make the UI and UX more appealing and user friendly.
+---
+
+### 1. Use a component library to make the UI and UX more appealing and user friendly.
 
 [Explain here why you chose the one you did]
 
@@ -31,17 +33,31 @@ I did more research and decided to go with Shadcn for the following reasons:
 - Has an extensive library of components to choose from.
 - Has a large and growing user base meaning it should be maintained and updated.
 - Has accessability built in
----
-
-2. Implement dark mode that includes a switcher to go back to light mode.
-
-3. Deleting a book displays a JavaScript alert. Replace this with modern UX.
-
-4. Add a rating system that goes up to 5 stars.
-
-5. There is a bug in the code. Find it and fix it.
+- It's nice and easy to use!
 
 ---
+
+### 2. Implement dark mode that includes a switcher to go back to light mode.
+
+I leveraged tailwind to add dark mode support. We can inline styles with a dark prefix e.g. `dark:bg-blue-600` to achieve custom dark mode styling where we need it.
+In order to manually override if dark mode is used we can change the tailwind config to `darkMode: 'class'` and then set or unset that class on a parent element to toggle between dark mode, as opposed to relying on the default browser setting.
+
+This class name behavior is abstracted in the `Theme.tsx` component and the main `page.tsx` component with the toggle holds the state.
+---
+
+### 3. Deleting a book displays a JavaScript alert. Replace this with modern UX.
+
+I replaced the alert with a simple Modal for confirming the descision.
+
+---
+
+### 4. Add a rating system that goes up to 5 stars.
+
+I noticed there is already data for rating books with a decimal rating (e.g. 4.6). However my implementation only allows for integer star ratings, this decision was to faciliate the star icon look I was going for in a reasonable amount of time.
+
+---
+
+### 5. There is a bug in the code. Find it and fix it.
 
 [Explain here what the bug was and how you fixed it]
 
@@ -68,7 +84,7 @@ const handleUpdateBook = (updatedBook: Partial<Book>) => {
 };
 ```
 
-When setting the new book data, `{...updatedBook, ...book}` will overwrite the new book with old data from `book`. This is because using the spread operator in an object will overwrite fields with the same key in the order they show in the object.
+When setting the new book data this code: `{...updatedBook, ...book}` will overwrite the new book data with the old data. This is because using the spread operator in an object will overwrite fields with the same key in the order they show in the object.
 
 For example:
 
@@ -86,8 +102,12 @@ console.log({ ...first, ...second });
 Because 'second' is spread afterwards it overwrites the 'first' objects value at
 the shared key 'a'
 
-Changing the order like so `{...book, ...updatedBook}` should resolve the issue.
+Changing the order like so `{...book, ...updatedBook}` has resolved the issue.
 
 ---
 
 Good luck and have fun!
+
+### Note
+
+This was a lot of fun! Thanks!
