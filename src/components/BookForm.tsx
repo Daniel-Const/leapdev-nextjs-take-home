@@ -2,15 +2,15 @@
 
 import { Book } from "@/types/book";
 import { FormEvent, useState } from "react";
-import { InputField } from "./InputField";
+import { InputField } from "./ui/InputField";
 
 interface BookFormProps {
   book?: Book;
-  onSubmit: (book: Partial<Book>) => void;
   onCancel: () => void;
+  onSubmit: (book: Partial<Book>) => void;
 }
 
-export default function BookForm({ book, onSubmit, onCancel }: BookFormProps) {
+export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
   const [formData, setFormData] = useState<Partial<Book>>(
     book ?? {
       title: "",
@@ -29,6 +29,10 @@ export default function BookForm({ book, onSubmit, onCancel }: BookFormProps) {
     }
   );
 
+  const updateForm = (key: keyof Book, value: string | number) => {
+    setFormData({ ...formData, [key]: value });
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSubmit(formData);
@@ -36,138 +40,76 @@ export default function BookForm({ book, onSubmit, onCancel }: BookFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* <div>
-        <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Title
-        </label>
-        <input
-          type="text"
-          id="title"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          required
-        />
-      </div> */}
+      <InputField
+        id="title"
+        label="Title"
+        placeholder="Book title"
+        value={formData.title}
+        onChange={(e) => updateForm("title", e.target.value)}
+        required
+      />
 
-      <InputField id="title" label="Title" placeholder="Book title" />
-      <InputField id="author" label="Author" placeholder="Author" />
-
-      <div>
-        <label
-          htmlFor="author"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Author
-        </label>
-        <input
-          type="text"
-          id="author"
-          value={formData.author}
-          onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          required
-        />
-      </div>
+      <InputField
+        id="author"
+        label="Author"
+        placeholder="Author"
+        value={formData.author}
+        onChange={(e) => updateForm("author", e.target.value)}
+        required
+      />
 
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label
-            htmlFor="price"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Price
-          </label>
-          <input
-            type="number"
-            id="price"
-            value={formData.price}
-            onChange={(e) =>
-              setFormData({ ...formData, price: parseFloat(e.target.value) })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            required
-            step="0.01"
-          />
-        </div>
+        <InputField
+          id="price"
+          label="Price"
+          placeholder="Price"
+          value={formData.price}
+          type="number"
+          step={0.01}
+          onChange={(e) => {
+            console.log(e.target.value, formData.price);
+            updateForm("price", parseFloat(e.target.value));
+          }}
+          required
+        />
 
-        <div>
-          <label
-            htmlFor="currency"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Currency
-          </label>
-          <input
-            type="text"
-            id="currency"
-            value={formData.currency}
-            onChange={(e) =>
-              setFormData({ ...formData, currency: e.target.value })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            required
-          />
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="isbn"
-          className="block text-sm font-medium text-gray-700"
-        >
-          ISBN
-        </label>
-        <input
-          type="text"
-          id="isbn"
-          value={formData.isbn}
-          onChange={(e) => setFormData({ ...formData, isbn: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        <InputField
+          id="currency"
+          label="Currency"
+          placeholder="Currency"
+          value={formData.currency}
+          onChange={(e) => updateForm("currency", e.target.value)}
           required
         />
       </div>
 
-      <div>
-        <label
-          htmlFor="coverImage"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Cover Image URL
-        </label>
-        <input
-          type="text"
-          id="coverImage"
-          value={formData.coverImage}
-          onChange={(e) =>
-            setFormData({ ...formData, coverImage: e.target.value })
-          }
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          required
-        />
-      </div>
+      <InputField
+        id="isbn"
+        label="ISBN"
+        placeholder="ISBN"
+        value={formData.isbn}
+        onChange={(e) => updateForm("isbn", e.target.value)}
+        required
+      />
 
-      <div>
-        <label
-          htmlFor="description"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Description
-        </label>
-        <textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
-          }
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          rows={3}
-          required
-        />
-      </div>
+      <InputField
+        id="coverImage"
+        label="Cover Image URL"
+        placeholder=" Image URL..."
+        value={formData.coverImage}
+        onChange={(e) => updateForm("coverImage", e.target.value)}
+        required
+      />
+
+      <InputField
+        id="description"
+        label="Description"
+        type="textarea"
+        placeholder="Description for the book"
+        value={formData.description}
+        onChange={(e) => updateForm("description", e.target.value)}
+        required
+      />
 
       <div className="flex justify-end gap-4">
         <button

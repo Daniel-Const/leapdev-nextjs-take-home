@@ -3,9 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -18,12 +16,11 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-export default function Modal({
+export default function FormModal({
   isOpen,
-  onClose,
   title,
-  confirmText,
   children,
+  onClose,
 }: ModalProps) {
   if (!isOpen) return null;
 
@@ -33,13 +30,8 @@ export default function Modal({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
+
         {children}
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </DialogClose>
-          <Button type="submit">{confirmText}</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

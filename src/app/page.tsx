@@ -2,10 +2,13 @@
 
 import BookCard from "@/components/BookCard";
 import BookForm from "@/components/BookForm";
-import { Button } from "@/components/ui/button";
 import Modal from "@/components/Modal";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Book } from "@/types/book";
-import { useState } from "react";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { useMemo, useState } from "react";
 import data from "../../public/data.json";
 import { ThemeProvider, useDarkModeSwitch } from "./Theme";
 
@@ -45,20 +48,33 @@ export default function Page() {
     setIsModalOpen(true);
   };
 
+  const darkModeMessage = useMemo(() => {
+    return isDarkMode ? "Dark Mode" : "Light Mode";
+  }, [isDarkMode]);
+
   return (
     <ThemeProvider darkMode={isDarkMode}>
-      <main className="bg-red-100 dark:bg-blue-500">
+      <main className="bg-white dark:bg-slate-800">
         <div className="container mx-auto px-4 py-8">
-          <Button
-            className="bg-blue-500 dark:bg-red-500"
-            onClick={() => toggleDarkMode()}
-          >
-            Test toggle
-          </Button>
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Book Gallery</h1>
+            <h1 className="text-3xl font-bold dark:text-white">Book Gallery</h1>
+            <div className="inline-flex items-center gap-2">
+              <Switch
+                id="dark-mode-switch"
+                className="bg-blue-500 dark:bg-red-500"
+                onClick={() => toggleDarkMode()}
+              />
+              <Label htmlFor="dark-mode-switch">
+                <span className="sr-only">Toggle switch</span>
+                {isDarkMode ? (
+                  <MoonIcon className="size-4 text-white" aria-hidden="true" />
+                ) : (
+                  <SunIcon className="size-4" aria-hidden="true" />
+                )}
+              </Label>
+            </div>
             <Button
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+              className="bg-blue-500 dark:bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
               onClick={() => {
                 setSelectedBook(undefined);
                 setIsModalOpen(true);
