@@ -3,12 +3,10 @@
 import BookCard from "@/components/BookCard";
 import BookForm from "@/components/BookForm";
 import Modal from "@/components/Modal";
+import { ThemeSwitch } from "@/components/ThemeSwitch";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Book } from "@/types/book";
-import { MoonIcon, SunIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import data from "../../public/data.json";
 import { ThemeProvider, useDarkModeSwitch } from "./Theme";
 
@@ -54,21 +52,7 @@ export default function Page() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold dark:text-white">Book Gallery</h1>
-            <div className="inline-flex items-center gap-2">
-              <Switch
-                id="dark-mode-switch"
-                className="bg-blue-500 dark:bg-red-500"
-                onClick={() => toggleDarkMode()}
-              />
-              <Label htmlFor="dark-mode-switch">
-                <span className="sr-only">Toggle switch</span>
-                {isDarkMode ? (
-                  <MoonIcon className="size-4 text-white" aria-hidden="true" />
-                ) : (
-                  <SunIcon className="size-4" aria-hidden="true" />
-                )}
-              </Label>
-            </div>
+            <ThemeSwitch isDarkMode={isDarkMode} toggle={toggleDarkMode} />
             <Button
               className="bg-blue-500 dark:bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
               onClick={() => {
@@ -91,6 +75,7 @@ export default function Page() {
             ))}
           </div>
 
+          {/* Form modal for editing / adding a book */}
           <Modal
             isOpen={isFormModalOpen}
             onClose={() => {
@@ -108,8 +93,9 @@ export default function Page() {
                 }}
               />
             }
-          ></Modal>
+          />
 
+          {/* Confirmation modal for deleting a book */}
           <Modal
             isOpen={isDeleteModalOpen}
             onClose={() => {

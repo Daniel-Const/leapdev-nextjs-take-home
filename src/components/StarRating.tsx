@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import { useState } from "react";
+import { useCallback } from "react";
 
 export const StarRating = ({
   id,
@@ -14,11 +14,14 @@ export const StarRating = ({
   size?: string;
   readonly?: boolean;
 }) => {
-  const handleUpdateRating = (newRating: number) => {
-    if (!readonly) {
-      onChange?.(newRating);
-    }
-  };
+  const handleUpdateRating = useCallback(
+    (newRating: number) => {
+      if (!readonly) {
+        onChange?.(newRating);
+      }
+    },
+    [readonly]
+  );
 
   return (
     <span className="inline-flex" id={id}>

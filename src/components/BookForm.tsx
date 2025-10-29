@@ -3,8 +3,8 @@
 import { Book } from "@/types/book";
 import { Label } from "@radix-ui/react-label";
 import { FormEvent, useState } from "react";
+import { InputField } from "./InputField";
 import { StarRating } from "./StarRating";
-import { InputField } from "./ui/InputField";
 import { Button } from "./ui/button";
 
 interface BookFormProps {

@@ -1,13 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "@/components/ui/dialog";
 
 interface ModalProps {
@@ -19,7 +18,7 @@ interface ModalProps {
   footer?: React.ReactNode;
 }
 
-export default function FormModal({
+export default function Modal({
   isOpen,
   title,
   description,
