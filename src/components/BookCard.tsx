@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Book } from "@/types/book";
+import { Star } from "lucide-react";
+import { StarRating } from "./StarRating";
 
 interface BookCardProps {
   book: Book;
@@ -20,6 +22,15 @@ export default function BookCard({ book, onEdit, onDelete }: BookCardProps) {
       </div>
       <div className="p-4 bg-white dark:bg-slate-600">
         <h3 className="text-lg font-semibold dark:text-white">{book.title}</h3>
+        <div className="text-lg font-semibold dark:text-white">
+          <StarRating
+            id="star-rating"
+            rating={book.rating ?? 0}
+            readonly={true}
+            size="20px"
+          />
+        </div>
+
         <p className="text-gray-600 dark:text-white">{book.author}</p>
         <p className="text-green-600 font-semibold mb-2">
           {book.currency} {book.price.toFixed(2)}

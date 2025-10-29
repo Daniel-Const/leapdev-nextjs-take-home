@@ -1,7 +1,9 @@
 "use client";
 
 import { Book } from "@/types/book";
+import { Label } from "@radix-ui/react-label";
 import { FormEvent, useState } from "react";
+import { StarRating } from "./StarRating";
 import { InputField } from "./ui/InputField";
 
 interface BookFormProps {
@@ -57,6 +59,21 @@ export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
         onChange={(e) => updateForm("author", e.target.value)}
         required
       />
+
+      <div>
+        <Label
+          htmlFor="star-rating"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Rating
+        </Label>
+        <StarRating
+          id="star-rating"
+          rating={formData.rating ?? 0}
+          onChange={(value) => updateForm("rating", value)}
+          readonly={false}
+        />
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
         <InputField
