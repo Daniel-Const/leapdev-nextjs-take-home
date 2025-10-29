@@ -14,7 +14,8 @@ import { ThemeProvider, useDarkModeSwitch } from "./Theme";
 
 export default function Page() {
   const [books, setBooks] = useState<Book[]>(data as Book[]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | undefined>(undefined);
   const { isDarkMode, toggleDarkMode } = useDarkModeSwitch();
 
@@ -24,7 +25,7 @@ export default function Page() {
       id: Math.max(...books.map((b) => b.id)) + 1,
     };
     setBooks([...books, book]);
-    setIsModalOpen(false);
+    setIsFormModalOpen(false);
   };
 
   const handleUpdateBook = (updatedBook: Partial<Book>) => {
@@ -33,19 +34,18 @@ export default function Page() {
         book.id === selectedBook?.id ? { ...book, ...updatedBook } : book
       )
     );
-    setIsModalOpen(false);
+    setIsFormModalOpen(false);
     setSelectedBook(undefined);
   };
 
-  const handleDeleteBook = (id: number) => {
-    if (confirm("Are you sure you want to delete this book?")) {
-      setBooks(books.filter((book) => book.id !== id));
-    }
+  const handleDeleteBook = (book: Book) => {
+    setSelectedBook(book);
+    setIsDeleteModalOpen(true);
   };
 
   const handleEdit = (book: Book) => {
     setSelectedBook(book);
-    setIsModalOpen(true);
+    setIsFormModalOpen(true);
   };
 
   return (
@@ -73,7 +73,7 @@ export default function Page() {
               className="bg-blue-500 dark:bg-blue-800 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
               onClick={() => {
                 setSelectedBook(undefined);
-                setIsModalOpen(true);
+                setIsFormModalOpen(true);
               }}
             >
               Add New Book
@@ -92,23 +92,59 @@ export default function Page() {
           </div>
 
           <Modal
-            isOpen={isModalOpen}
+            isOpen={isFormModalOpen}
             onClose={() => {
-              setIsModalOpen(false);
+              setIsFormModalOpen(false);
               setSelectedBook(undefined);
             }}
             title={selectedBook ? "Edit Book" : "Add New Book"}
-            confirmText={selectedBook ? "Update Book" : "Add Book"}
-          >
-            <BookForm
-              book={selectedBook}
-              onSubmit={selectedBook ? handleUpdateBook : handleAddBook}
-              onCancel={() => {
-                setIsModalOpen(false);
-                setSelectedBook(undefined);
-              }}
-            />
-          </Modal>
+            content={
+              <BookForm
+                book={selectedBook}
+                onSubmit={selectedBook ? handleUpdateBook : handleAddBook}
+                onCancel={() => {
+                  setIsFormModalOpen(false);
+                  setSelectedBook(undefined);
+                }}
+              />
+            }
+          ></Modal>
+
+          <Modal
+            isOpen={isDeleteModalOpen}
+            onClose={() => {
+              setIsDeleteModalOpen(false);
+              setSelectedBook(undefined);
+            }}
+            content={
+              <div className="flex justify-end gap-4">
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setSelectedBook(undefined);
+                    setIsDeleteModalOpen(false);
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={() => {
+                    setBooks(
+                      books.filter((book) => book.id !== selectedBook?.id)
+                    );
+                    setIsDeleteModalOpen(false);
+                    setSelectedBook(undefined);
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-white bg-red-500 border border-transparent rounded-md hover:bg-red-700"
+                >
+                  Delete Book
+                </Button>
+              </div>
+            }
+            title={`Delete ${selectedBook?.title}`}
+            description="Are you sure you want to delete this book?"
+          ></Modal>
         </div>
       </main>
     </ThemeProvider>

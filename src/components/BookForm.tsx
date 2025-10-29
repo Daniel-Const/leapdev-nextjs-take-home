@@ -5,6 +5,7 @@ import { Label } from "@radix-ui/react-label";
 import { FormEvent, useState } from "react";
 import { StarRating } from "./StarRating";
 import { InputField } from "./ui/InputField";
+import { Button } from "./ui/button";
 
 interface BookFormProps {
   book?: Book;
@@ -63,13 +64,13 @@ export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
       <div>
         <Label
           htmlFor="star-rating"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 pb-2"
         >
           Rating
         </Label>
         <StarRating
           id="star-rating"
-          rating={formData.rating ?? 0}
+          rating={formData.rating ?? 1}
           onChange={(value) => updateForm("rating", value)}
           readonly={false}
         />
@@ -129,19 +130,19 @@ export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
       />
 
       <div className="flex justify-end gap-4">
-        <button
+        <Button
           type="button"
           onClick={onCancel}
           className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
           className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700"
         >
           {book ? "Update Book" : "Add Book"}
-        </button>
+        </Button>
       </div>
     </form>
   );

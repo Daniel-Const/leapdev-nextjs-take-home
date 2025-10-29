@@ -2,11 +2,12 @@ import Image from "next/image";
 import { Book } from "@/types/book";
 import { Star } from "lucide-react";
 import { StarRating } from "./StarRating";
+import { Button } from "./ui/button";
 
 interface BookCardProps {
   book: Book;
   onEdit: (book: Book) => void;
-  onDelete: (id: number) => void;
+  onDelete: (book: Book) => void;
 }
 
 export default function BookCard({ book, onEdit, onDelete }: BookCardProps) {
@@ -25,7 +26,7 @@ export default function BookCard({ book, onEdit, onDelete }: BookCardProps) {
         <div className="text-lg font-semibold dark:text-white">
           <StarRating
             id="star-rating"
-            rating={book.rating ?? 0}
+            rating={book.rating ?? 1}
             readonly={true}
             size="20px"
           />
@@ -39,18 +40,19 @@ export default function BookCard({ book, onEdit, onDelete }: BookCardProps) {
           {book.description}
         </p>
         <div className="mt-4 flex gap-2">
-          <button
+          <Button
             onClick={() => onEdit(book)}
             className="bg-blue-500 dark:bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Edit
-          </button>
-          <button
-            onClick={() => onDelete(book.id)}
+          </Button>
+
+          <Button
+            onClick={() => onDelete(book)}
             className="bg-red-500 dark:bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600"
           >
             Delete
-          </button>
+          </Button>
         </div>
       </div>
     </div>

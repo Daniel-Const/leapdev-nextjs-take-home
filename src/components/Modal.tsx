@@ -6,20 +6,25 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  confirmText: string;
-  children: React.ReactNode;
+  content: React.ReactNode;
+  description?: string;
+  footer?: React.ReactNode;
 }
 
 export default function FormModal({
   isOpen,
   title,
-  children,
+  description,
+  content,
+  footer,
   onClose,
 }: ModalProps) {
   if (!isOpen) return null;
@@ -30,9 +35,10 @@ export default function FormModal({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-
-        {children}
+        <DialogDescription>{description}</DialogDescription>
+        {content}
       </DialogContent>
+      <DialogFooter>{footer}</DialogFooter>
     </Dialog>
   );
 }
