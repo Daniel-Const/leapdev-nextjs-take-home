@@ -48,10 +48,6 @@ export default function Page() {
     setIsModalOpen(true);
   };
 
-  const darkModeMessage = useMemo(() => {
-    return isDarkMode ? "Dark Mode" : "Light Mode";
-  }, [isDarkMode]);
-
   return (
     <ThemeProvider darkMode={isDarkMode}>
       <main className="bg-white dark:bg-slate-800">
