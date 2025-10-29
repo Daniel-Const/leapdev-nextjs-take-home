@@ -14,6 +14,25 @@ Please implement the following:
 
 [Explain here why you chose the one you did]
 
+Some Considerations:
+
+- Needs to have all of the classic components such as Button, Dialog, Toast notification (For alerts) etc.
+- This project already heavily uses tailwind. Ideally, the newly introduced component library will be able to support custom styling with tailwind so we can maintain existing styles during the transition.
+- Should be easy to install and use so other developers can get setup easily
+- Should have accessability features out of the box.
+
+I chose to use the shadcn component library
+
+Initially I chose material-tailwind but I encountered a number of issues with it relating to package version compatability and some style issues as well.
+
+I did more research and decided to go with Shadcn for the following reasons:
+
+- It is lightweight and supports tailwind out of the box.
+- Has an extensive library of components to choose from.
+- Has a large and growing user base meaning it should be maintained and updated.
+- Has accessability built in
+---
+
 2. Implement dark mode that includes a switcher to go back to light mode.
 
 3. Deleting a book displays a JavaScript alert. Replace this with modern UX.

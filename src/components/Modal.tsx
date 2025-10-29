@@ -1,9 +1,20 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  confirmText: string;
   children: React.ReactNode;
 }
 
@@ -11,22 +22,25 @@ export default function Modal({
   isOpen,
   onClose,
   title,
+  confirmText,
   children,
 }: ModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex min-h-screen items-center justify-center p-4">
-        <div
-          className="fixed inset-0 bg-black bg-opacity-25"
-          onClick={onClose}
-        />
-        <div className="relative bg-white rounded-lg p-6 w-full max-w-lg">
-          <h2 className="text-xl font-semibold mb-4">{title}</h2>
-          {children}
-        </div>
-      </div>
-    </div>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        {children}
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">Cancel</Button>
+          </DialogClose>
+          <Button type="submit">{confirmText}</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
