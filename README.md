@@ -41,8 +41,8 @@ I did more research and decided to go with Shadcn for the following reasons:
 
 I leveraged tailwind to add dark mode support. We can inline styles with a dark prefix e.g. `dark:bg-blue-600` to achieve custom dark mode styling where we need it.
 In order to manually override if dark mode is used we can change the tailwind config to `darkMode: 'class'` and then set or unset that class on a parent element to toggle between dark mode, as opposed to relying on the default browser setting.
+This class behavior is abstracted in the `Theme.tsx` file as a custom hook
 
-This class name behavior is abstracted in the `Theme.tsx` component and the main `page.tsx` component with the toggle holds the state.
 ---
 
 ### 3. Deleting a book displays a JavaScript alert. Replace this with modern UX.
