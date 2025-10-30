@@ -128,8 +128,8 @@ export default function Page() {
                 </Button>
               </div>
             }
-            title={`Delete ${selectedBook?.title}`}
-            description="Are you sure you want to delete this book?"
+            title={`Deleting "${selectedBook?.title}"`}
+            description="Are you sure you want to remove this book?"
           ></Modal>
         </div>
       </main>

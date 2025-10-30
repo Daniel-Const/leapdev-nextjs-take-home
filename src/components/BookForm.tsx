@@ -33,7 +33,7 @@ export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
   );
 
   const updateForm = (key: keyof Book, value: string | number) => {
-    setFormData({ ...formData, [key]: value });
+    setFormData((formData) => ({ ...formData, [key]: value }));
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -85,7 +85,6 @@ export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
           type="number"
           step={0.01}
           onChange={(e) => {
-            console.log(e.target.value, formData.price);
             updateForm("price", parseFloat(e.target.value));
           }}
           required
