@@ -64,7 +64,7 @@ export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
       <div>
         <Label
           htmlFor="star-rating"
-          className="block text-sm font-medium text-gray-700 pb-2"
+          className="block text-sm font-medium text-gray-700 dark:text-gray-200 pb-2"
         >
           Rating
         </Label>
@@ -128,11 +128,11 @@ export default function BookForm({ book, onCancel, onSubmit }: BookFormProps) {
         required
       />
 
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end gap-4 pt-4">
         <Button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-md hover:bg-gray-400"
         >
           Cancel
         </Button>

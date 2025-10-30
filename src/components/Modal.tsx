@@ -30,11 +30,13 @@ export default function Modal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] dark:bg-slate-600 dark:text-gray-200">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle className="font-semibold text-2xl">{title}</DialogTitle>
         </DialogHeader>
-        <DialogDescription>{description}</DialogDescription>
+        <DialogDescription className="dark:text-gray-300">
+          {description}
+        </DialogDescription>
         {content}
       </DialogContent>
       <DialogFooter>{footer}</DialogFooter>

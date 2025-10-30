@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { ReactElement, useState } from "react";
 
 /**
@@ -12,19 +13,16 @@ export const useDarkModeSwitch = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
   return {
     isDarkMode,
     toggleDarkMode,
   };
-};
-
-export const ThemeProvider = ({
-  darkMode,
-  children,
-}: {
-  darkMode: boolean;
-  children: ReactElement;
-}) => {
-  const darkModeClass = darkMode ? "dark" : "";
-  return <div className={darkModeClass}>{children}</div>;
 };

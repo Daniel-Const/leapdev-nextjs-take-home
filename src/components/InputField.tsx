@@ -29,7 +29,10 @@ export const InputField = ({
 }: InputFieldProps) => {
   return (
     <div>
-      <Label htmlFor={id} className="block text-sm font-medium text-gray-700">
+      <Label
+        htmlFor={id}
+        className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+      >
         {label}
       </Label>
       {type === "textarea" ? (
